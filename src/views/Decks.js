@@ -14,14 +14,15 @@ class Decks extends Component {
 
   render(){
     const isEmpty = this.props.decks.deckList && this.props.decks.deckList.length === 0;
-    console.log(this.props);
     return (
-      <View style={{flex: 1, justifyContent: !isEmpty ? "flex-start" : "center", alignContent: "center", padding: 10}}>
+      <View style={{flex: 1, justifyContent: !isEmpty ? "flex-start" : "center"}}>
       {this.props.decks.isLoading
       ? <Text> Loading ...</Text>
       :
         this.props.decks.deckList && this.props.decks.deckList.length ? 
-          <Text>Decks</Text>
+        this.props.decks.deckList.map((deck,key) => 
+        <Text key={key}>{deck.name}</Text>
+        )
         :
           <Text style={{textAlign: "center"}}>You don't have a deck yet... How about creating one on the next tab?</Text>
       }
