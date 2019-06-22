@@ -54,7 +54,7 @@ const decks = (state = initialState, action) => {
                 ...deck,
                 cards: [
                   ...deck.cards,
-                  { question: action.question, answer: action.answer }
+                  { ...action.card }
                 ]
               }
             }
