@@ -24,6 +24,15 @@ export const fetchDecks = () => dispatch => {
     } else {
       newDecks = decks;
     }
+    newDecks = newDecks.sort((a,b) => {
+        if (a.id > b.id) {
+        return 1;
+      }
+      if (a.id < b.id) {
+        return -1;
+      }
+      return 0;
+    });
     dispatch({
       type: ActionTypes.RECEIVE_DECKS,
       decks: newDecks

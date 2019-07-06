@@ -52,12 +52,21 @@ const decks = (state = initialState, action) => {
           ...state,
           deckList: state.deckList.map( deck => {
             if(deck.id === action.deckId){
-              return {
-                ...deck,
-                cards: [
-                  ...deck.cards,
-                  { ...action.card }
-                ]
+              if(deck.cards){
+                return {
+                  ...deck,
+                  cards: [
+                    ...deck.cards,
+                    { ...action.card }
+                  ]
+                }
+              } else {
+                return {
+                  ...deck,
+                  cards: [
+                    { ...action.card }
+                  ]
+                }
               }
             }
             return deck;

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, FlatList, Platform } from 'react-native';
 import * as DecksActions from '../actions/deck';
+import { orange, white, gray, blue } from '../util/colors';
 
 
 
@@ -12,27 +13,41 @@ class Decks extends Component {
     this.props.fetchDecks();
   }
 
-  render(){
-    const isEmpty = this.props.decks.deckList && this.props.decks.deckList.length === 0;
+  renderDeckList = () => {
     const {navigate} = this.props.navigation;
     return (
-      <View style={{flex: 1, justifyContent: !isEmpty ? "flex-start" : "center"}}>
+      this.props.decks.deckList && this.props.decks.deckList.length ? 
+      <View style={{flex: 1}}>
+        <FlatList 
+          data={this.props.decks.deckList}
+          renderItem={({item}) => 
+            <TouchableOpacity onPress={() => navigate("Deck", { deck: item })} style={{backgroundColor: gray, textAlign: "center", padding: 20, borderRadius: 10, margin: 10}}>
+              <Text style={{color: orange, fontSize: 25, alignSelf: "center", textTransform: "uppercase"}}>{item.name}</Text>
+              <Text style={{color: blue, fontSize: 10, alignSelf: "center"}}>({item.cards ? item.cards.length : 0} cards)</Text>
+          </TouchableOpacity>
+          }
+          keyExtractor={(item, index) => index.toString()}
+        />
+          <TouchableOpacity onPress={() => this.props.clearDecks()} style={{alignSelf: "flex-end"}}>
+            <Text style={{color: "#e5e5e5"}}>Clear everything!</Text>
+          </TouchableOpacity>
+      </View>
+      :
+      <View>
+        <Text style={{textAlign: "center", color: blue, fontSize: 20, marginBottom: 10}}>You don't have a deck yet...</Text>
+        <Text style={{textAlign: "center", color: blue, fontSize: 20}}>How about creating one on the next tab?</Text>
+      </View>
+    )
+  }
+
+  render(){
+    const isEmpty = this.props.decks.deckList && this.props.decks.deckList.length === 0;
+    return (
+      <View style={{flex: 1, justifyContent: !isEmpty ? "flex-start" : "center", backgroundColor: white}}>
       {this.props.decks.isLoading
       ? <Text> Loading ...</Text>
-      :
-        this.props.decks.deckList && this.props.decks.deckList.length ? 
-        this.props.decks.deckList.map((deck,key) => 
-        <TouchableOpacity key={key} onPress={() => navigate("Deck", { deck: deck })}>
-          <Text>{deck.name}</Text>
-          <Text>{deck.cards ? deck.cards.length : 0} cards</Text>
-        </TouchableOpacity>
-        )
-        :
-          <Text style={{textAlign: "center"}}>You don't have a deck yet... How about creating one on the next tab?</Text>
+      : this.renderDeckList()
       }
-        <TouchableOpacity onPress={() => this.props.clearDecks()}>
-          <Text>Remove!</Text>
-        </TouchableOpacity>
       </View>
     );
   }

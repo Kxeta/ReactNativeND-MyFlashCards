@@ -3,10 +3,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Switch } from 'react-native';
 import * as CardActions from '../actions/card';
+import { blue, white, gray, orange } from '../util/colors';
 
 
 
 class AddCard extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.getParam("deck").name} - New Question`
+  });
 
   state = {
     question: '',
@@ -28,25 +32,25 @@ class AddCard extends Component {
     const {navigate} = this.props.navigation;
     const deck = this.props.navigation.getParam("deck");
     return (
-      <View style={{flex: 1, paddingTop: 10}}>
+      <View style={{flex: 1, paddingTop: 10, backgroundColor: gray}}>
       {this.props.decks.isLoading
       ? <View><Text> Loading ...</Text></View>
       : <KeyboardAvoidingView>
-          <Text>New Question:</Text>
+          <Text style={{color: blue, fontSize: 15, textAlign: "center"}}>New Question:</Text>
           <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            style={{height: 40, borderColor: 'gray', borderWidth: 1, borderRadius: 10, margin: 10, paddingHorizontal: 5}}
             onChangeText={question => this.setState({question})}
             value={this.state.question}
             onSubmitEditing={this.handleSubmit}
           />
-          <Text>Is it correct?</Text>
+          <Text style={{color: blue, fontSize: 15, textAlign: "center"}}>Is it correct?</Text>
           <Switch
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            style={{height: 40, alignSelf: "center", margin: 10}}
             onValueChange={(isCorrect) => this.setState({answer: isCorrect})}
             value={this.state.answer}
           />
-          <TouchableOpacity onPress={this.handleSubmit} disabled={disabled}>
-            <Text>Add it!</Text>
+          <TouchableOpacity onPress={this.handleSubmit} disabled={disabled} style={{width: "95%", padding: 10, backgroundColor: disabled ? gray : white, justifyContent: "center", alignContent: "center", margin: 10, borderRadius: 10}}>
+            <Text style={{color: disabled ? white : orange, fontSize: 15, textAlign: "center"}}>Add it!</Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
       }
