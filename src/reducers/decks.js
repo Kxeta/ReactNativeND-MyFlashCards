@@ -12,12 +12,14 @@ const decks = (state = initialState, action) => {
         ...state,
         isLoading: action.payload
       };
-    case ActionTypes.RECEIVE_DECKS:
+    case ActionTypes.RECEIVE_DECKS: {
       return {
         ...state,
         deckList: [...action.decks]
-      };
-    case ActionTypes.CREATE_DECK: {      
+      }
+    }
+
+    case ActionTypes.CREATE_DECK: {  
       return {
         ...state,
         deckList: [
@@ -61,6 +63,8 @@ const decks = (state = initialState, action) => {
             return deck;
         })
       };
+    case "CLEAR": 
+      return initialState
     default:
       return state
   }

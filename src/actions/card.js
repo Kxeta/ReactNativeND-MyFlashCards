@@ -13,17 +13,24 @@ export const addCard = (deckId, question, answer) => dispatch => {
     question,
     answer
   }
-  API.saveCard(deckId, card);
-  dispatch({
-    type: ActionTypes.CREATE_CARD,
-    deckId,
-    card
-  })
-  .then(() => {
+  API.saveCard(deckId, card).then(() => {
     dispatch({
-      type: IS_LOADING,
+      type: ActionTypes.CREATE_CARD,
+      deckId,
+      card
+    })
+    dispatch({
+      type: ActionTypes.IS_LOADING,
       payload: false,
     });
+  })
+  .catch(e => {
+    console.log(e);
+    dispatch({
+      type: ActionTypes.IS_LOADING,
+      payload: false,
+    });
+
   });
   return card;
 }

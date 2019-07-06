@@ -18,7 +18,7 @@ export default class App extends Component {
   render(){
     return (
       <Provider store={configureStore()}>
-        <View style={{flex: 1, alignContent: "center", padding: 10}}>
+        <View style={{flex: 1, alignContent: "center"}}>
           <CustomStatusBar backgroundColor={blue} barStyle="light-content"/>
           <AppContainer />
         </View>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import * as DecksActions from '../actions/deck';
 
 
@@ -24,11 +24,10 @@ class AddDeck extends Component {
     const { name } = this.state;
     const disabled = name.trim().length === 0;
     return (
-      <View style={{flex: 1, justifyContent: "center"}}>
+      <View style={{flex: 1, paddingTop: 10}}>
       {this.props.decks.isLoading
-      ? <Text> Loading ...</Text>
-      :
-        <View>
+      ? <View><Text> Loading ...</Text></View>
+      : <KeyboardAvoidingView>
           <Text>New Deck Name:</Text>
           <TextInput
             style={{height: 40, borderColor: 'gray', borderWidth: 1}}
@@ -40,7 +39,7 @@ class AddDeck extends Component {
             <Text>Save</Text>
           </TouchableOpacity>
 
-        </View>
+        </KeyboardAvoidingView>
       }
       </View>
     );

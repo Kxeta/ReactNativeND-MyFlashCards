@@ -9,10 +9,15 @@ export const getDecks = () => {
 };
 
 export const saveDeck = deck => {
-  return AsyncStorage.mergeItem(
-    STORAGE_KEY,
-    JSON.stringify({ [deck.id]: deck })
-  );
+  return AsyncStorage.getItem(STORAGE_KEY).then(results => {
+    let decks = JSON.parse(results) || [];
+    decks = {
+      ...decks,
+      [deck.id]: deck,
+    }
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+    return decks;
+  });
 };
 
 export const updateDeck = deck => {
@@ -24,26 +29,23 @@ export const updateDeck = deck => {
 
 export const saveCard = (deckId, card) => {
   return AsyncStorage.getItem(STORAGE_KEY).then(results => {
-    const decks = JSON.parse(results);
-    decks = decks.map(deck => {
-      if(deck.id === deckId){
-        return {
-          ...deck,
-          cards: [
-            ...deck.cards,
-            { id: card.id, question: card.question, answer: card.answer }
-
-          ]
+    let decks = JSON.parse(results);
+      const decksCards = decks[deckId].cards || [];
+      decksCards.push({ id: card.id, question: card.question, answer: card.answer })
+      decks = {
+        ...decks,
+        [deckId]: {
+          ...decks[deckId],
+          cards: decksCards
         }
       }
-    })
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
   })
 };
 
 export const updateCard = (deckId, card) => {
   return AsyncStorage.getItem(STORAGE_KEY).then(results => {
-    const decks = JSON.parse(results);
+    let decks = JSON.parse(results);
     decks = decks.map(deck => {
       if(deck.id === deckId){
         return {
@@ -64,3 +66,7 @@ export const updateCard = (deckId, card) => {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
   })
 };
+
+export const doomsdayClear = () => {
+  return AsyncStorage.removeItem(STORAGE_KEY);
+}

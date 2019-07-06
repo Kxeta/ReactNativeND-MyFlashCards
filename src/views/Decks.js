@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import * as DecksActions from '../actions/deck';
 
 
@@ -14,6 +14,7 @@ class Decks extends Component {
 
   render(){
     const isEmpty = this.props.decks.deckList && this.props.decks.deckList.length === 0;
+    const {navigate} = this.props.navigation;
     return (
       <View style={{flex: 1, justifyContent: !isEmpty ? "flex-start" : "center"}}>
       {this.props.decks.isLoading
@@ -21,11 +22,17 @@ class Decks extends Component {
       :
         this.props.decks.deckList && this.props.decks.deckList.length ? 
         this.props.decks.deckList.map((deck,key) => 
-        <Text key={key}>{deck.name}</Text>
+        <TouchableOpacity key={key} onPress={() => navigate("Deck", { deck: deck })}>
+          <Text>{deck.name}</Text>
+          <Text>{deck.cards ? deck.cards.length : 0} cards</Text>
+        </TouchableOpacity>
         )
         :
           <Text style={{textAlign: "center"}}>You don't have a deck yet... How about creating one on the next tab?</Text>
       }
+        <TouchableOpacity onPress={() => this.props.clearDecks()}>
+          <Text>Remove!</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -37,6 +44,7 @@ const mapStateToProps = decks => ({
 const mapDispatchToProps = dispatch =>bindActionCreators(
   {
     fetchDecks: DecksActions.fetchDecks,
+    clearDecks: DecksActions.clearDecks,
   },
   dispatch,
 );

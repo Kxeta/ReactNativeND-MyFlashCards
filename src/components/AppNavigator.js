@@ -3,7 +3,7 @@ import {
   createStackNavigator
 } from "react-navigation";
 
-import { Decks } from '../views';
+import { Decks, Deck, AddCard } from '../views';
 
 export default AppNavigator = createStackNavigator({
   Home: {
@@ -12,25 +12,19 @@ export default AppNavigator = createStackNavigator({
       header: () => null
     }
   },
-  // //Mostra os detalhes de 1 deck:
-  // DeckDetails: {
-  //   screen: DeckScreen,
-  //   navigationOptions: ({ navigation }) => ({
-  //     title: "Details of deck"
-  //   })
-  // },
+  //Shows the Deck details:
+  Deck: {
+    screen: Deck,
+  },
 
   // QuizScreen: {
   //   screen: QuizScreen,
   //   navigationOptions: ({ navigation }) => ({
-  //     title: "Quiz Screen"
+  //     title: "Quiz Time"
   //   })
   // },
-  // // Add card to deck:
-  // AddCard: {
-  //   screen: AddCard,
-  //   navigationOptions: ({ navigation }) => ({
-  //     title: "Add Card"
-  //   })
-  // }
+  // Add card to deck:
+  AddCard: {
+    screen: AddCard,
+  }
 });
