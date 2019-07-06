@@ -3,6 +3,7 @@ This project was bootstrapped with [Create React Native App](https://github.com/
 ## About the project
 This is the third project for Udacity's React Nano Degree.
 The application allows a user to create a deck of flash cards, each having cards with a question and answer for the deck's topic. The user can then start a quiz to test their knowledge of the chosen topic. Here's a quick preview of the app in action:
+![](App.gif)
 
 ## App Stack
 To develop this app, I used [Create React Native App](https://github.com/react-community/create-react-native-app) and Redux.
