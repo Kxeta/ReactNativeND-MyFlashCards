@@ -16,7 +16,6 @@ class AddCard extends Component {
   handleSubmit = () => {
     const { question, answer } = this.state;
     const deck = this.props.navigation.getParam("deck");
-    // console.log(deck);
     if(question.trim().length){
       this.props.addCard(deck.id, question, answer);
       this.setState({question: '', answer: false});
@@ -36,7 +35,7 @@ class AddCard extends Component {
           <Text>New Question:</Text>
           <TextInput
             style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-            onChangeText={question => {console.log(question); this.setState({question})}}
+            onChangeText={question => this.setState({question})}
             value={this.state.question}
             onSubmitEditing={this.handleSubmit}
           />

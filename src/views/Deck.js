@@ -24,6 +24,9 @@ class Deck extends Component {
         <TouchableOpacity onPress={() => navigate("AddCard", { deck: deck })}>
           <Text>Add Card</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigate("Quiz", { deck: deck })} disabled={!deck.cards || deck.cards.length === 0}>
+          <Text>Quiz me!</Text>
+        </TouchableOpacity>
       </View>
     );
   }

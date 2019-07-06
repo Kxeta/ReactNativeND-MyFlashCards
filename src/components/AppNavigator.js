@@ -3,7 +3,7 @@ import {
   createStackNavigator
 } from "react-navigation";
 
-import { Decks, Deck, AddCard } from '../views';
+import { Decks, Deck, AddCard, Quiz } from '../views';
 
 export default AppNavigator = createStackNavigator({
   Home: {
@@ -17,12 +17,9 @@ export default AppNavigator = createStackNavigator({
     screen: Deck,
   },
 
-  // QuizScreen: {
-  //   screen: QuizScreen,
-  //   navigationOptions: ({ navigation }) => ({
-  //     title: "Quiz Time"
-  //   })
-  // },
+  Quiz: {
+    screen: Quiz
+  },
   // Add card to deck:
   AddCard: {
     screen: AddCard,
