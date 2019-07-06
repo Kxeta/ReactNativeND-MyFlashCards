@@ -11,10 +11,14 @@ import {
   createAppContainer
 } from "react-navigation";
 import { TabNavigator, CustomStatusBar } from './src/components';
+import { setLocalNotification } from './src/util/helpers';
 
 
 const AppContainer = createAppContainer(TabNavigator);
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
   render(){
     return (
       <Provider store={configureStore()}>
