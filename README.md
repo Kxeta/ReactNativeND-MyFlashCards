@@ -43,3 +43,6 @@ The app will reload if you make edits.<br>
 Starts the app with EXPO for each of the OS.<br>
 
 The app will reload if you make edits.<br>
+
+## Support
+This app was tested on an Android real device and on iOs Simulator (iPhone X)
